@@ -290,6 +290,10 @@ The validator checks:
 
 Hints, not instructions: the renderer owns final placement, so a diagram stays deterministic and a stale hint cannot break it. Absolute coordinates are not expressible. Omitting `layout` entirely is normal.
 
+`rank` is a floor. A card sits at its hint or one row below the deepest card that connects into it, whichever is further down the page, so a hint can push a card down and never up, and two cards joined by a connection never share a row. Hinting a few cards usually changes nothing, because the connections already put them there. Rank every card from the real call order when the lines matter.
+
+`laneOrder` also sets how far a removed connection travels. A connection with one removed end never crosses the living graph: it leaves through the corridor after the last lane and comes back. Each end that is not in the last lane spends a corridor and a band to get there, so a retired pair in a middle lane loops the whole canvas, while the same pair in the last lane runs straight out and back. A connection between two lanes turns at least twice whatever you hint, since a route moves along one axis at a time and connected cards never share a row.
+
 ## File references
 
 ```json
